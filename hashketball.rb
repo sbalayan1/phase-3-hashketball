@@ -126,4 +126,44 @@ def game_hash
   }
 end
 
-# Write code here
+def all_players
+  game_hash[:away][:players] + game_hash[:home][:players]
+end 
+
+def num_points_scored player
+  all_players.find {|obj| obj[:player_name] == player}[:points]
+end
+
+def shoe_size player
+  all_players.find {|obj| obj[:player_name] == player}[:shoe]
+end
+
+def team_colors team
+  game_hash.find {|key, val| val[:team_name] == team}[1][:colors]
+end
+
+def team_names
+  teams = game_hash.map {|key, val| val[:team_name]}
+end
+
+def player_numbers team
+  foundTeam = game_hash.find {|key, val| val[:team_name] == team}
+  foundTeam[1][:players].map {|obj| obj[:number]}
+end
+
+def player_stats player
+  all_players.find {|obj| obj[:player_name] == player}
+end
+
+def big_shoe_rebounds
+  max_shoe = all_players[0]
+  all_players.each do |obj|
+    if (max_shoe[:shoe] < obj[:shoe]) 
+      max_shoe = obj
+    end
+
+  end
+
+  max_shoe[:rebounds]
+end
+
